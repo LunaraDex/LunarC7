@@ -2,6 +2,4 @@
 Backdoor Scanner But Better
 
 # Feature
-*Ui \n
-*Faster \n
-*Compatible \n
+Ui, Faster, Compatible (highly recommended)
